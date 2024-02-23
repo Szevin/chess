@@ -1,0 +1,38 @@
+services:
+  core:
+    build: ./core
+    container_name: chess_core
+    volumes:
+      - ./core:/app
+      - ./client/chess-core:/app/chess-core
+
+  client:
+    build: ./client
+    container_name: chess_client
+    ports:
+      - '3000:3000'
+    volumes:
+      - chess-core:/app/chess-core
+    depends_on:
+      core:
+        condition: service_completed_successfully
+
+  server:
+    build: ./server
+    container_name: chess_server
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./server:/app
+      - chess-core:/app/chess-core
+    depends_on:
+      core:
+        condition: service_completed_successfully
+
+volumes:
+  chess-core:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./client/chess-core
