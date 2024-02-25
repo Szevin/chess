@@ -2,8 +2,8 @@ FROM rust
 
 WORKDIR /app
 
-COPY . .
-
 RUN cargo install wasm-pack
+
+COPY . .
 
 CMD ["wasm-pack", "build", "--target", "web", "--out-dir", "chess-core"]

@@ -2,8 +2,8 @@ FROM rust
 
 WORKDIR /app
 
-COPY . .
-
 RUN cargo install cargo-watch
+
+COPY . .
 
 CMD ["cargo", "watch", "-x", "run"]
