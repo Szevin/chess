@@ -1,15 +1,9 @@
 import { createSignal, onMount } from 'solid-js';
-import core, { add } from '../chess-core/core';
+import { ChessBoard } from '../chess-core';
 
 const App = () => {
-	const [result, setResult] = createSignal<number>();
 
-	onMount(async () => {
-		await core();
-		setResult(add(1, 2));
-	});
-
-	return <div>{result()}</div>;
+	return <div>{ChessBoard.new().print()}</div>;
 };
 
 export default App;
